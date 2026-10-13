@@ -45,7 +45,7 @@ const READ_ONLY = { readOnlyHint: true, openWorldHint: false };
 function reply(fn) {
   return async (args) => {
     try {
-      return { content: [{ type: "text", text: JSON.stringify(fn(args), null, 2) }] };
+      return { content: [{ type: "text", text: JSON.stringify(fn(args)) }] };
     } catch (err) {
       return { isError: true, content: [{ type: "text", text: err.message }] };
     }
