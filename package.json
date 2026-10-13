@@ -1,6 +1,6 @@
 {
   "name": "japan-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server for Japanese dates: national holidays, business days and era names (和暦). Offline, no API keys.",
   "type": "module",
   "bin": {
