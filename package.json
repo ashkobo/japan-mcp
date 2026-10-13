@@ -1,0 +1,52 @@
+{
+  "name": "japan-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Japanese dates: national holidays, business days and era names (和暦). Offline, no API keys.",
+  "type": "module",
+  "bin": {
+    "japan-mcp": "src/server.js"
+  },
+  "exports": "./src/index.js",
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "japan",
+    "japanese",
+    "holidays",
+    "business-days",
+    "wareki",
+    "claude",
+    "codex",
+    "祝日",
+    "営業日",
+    "和暦"
+  ],
+  "author": "Ash",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashkobo/japan-mcp.git"
+  },
+  "homepage": "https://github.com/ashkobo/japan-mcp#readme",
+  "bugs": "https://github.com/ashkobo/japan-mcp/issues",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@holiday-jp/holiday_jp": "^2.5.2"
+  }
+}
