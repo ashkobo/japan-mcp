@@ -34,7 +34,7 @@ const YEAR_END = z
   .boolean()
   .optional()
   .describe(
-    "Also treat 12/29–1/3 (年末年始) as closed, like banks and government offices. Default false.",
+    "Also close 12/29–1/3 (年末年始), a common office closure, not a bank calendar. Default false.",
   );
 const READ_ONLY = { readOnlyHint: true, openWorldHint: false };
 

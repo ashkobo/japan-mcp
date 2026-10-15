@@ -86,6 +86,15 @@ export function fromWareki(text) {
 
   const [m, d] = [match[3], match[4]].map((v) => (v === undefined ? undefined : Number(v)));
   if (m === undefined) return { year: gYear };
+  if (m < 1 || m > 12) throw new RangeError("Month must be between 1 and 12.");
+  const first = parseDate(`${gYear}-${String(m).padStart(2, "0")}-01`);
+  const next =
+    m === 12
+      ? parseDate(`${gYear + 1}-01-01`)
+      : parseDate(`${gYear}-${String(m + 1).padStart(2, "0")}-01`);
+  if (next <= era.startDay || first > era.endDay) {
+    throw new RangeError(`${text} is outside ${era.name}.`);
+  }
   if (d === undefined) return { year: gYear, month: m };
 
   const iso = `${gYear}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;

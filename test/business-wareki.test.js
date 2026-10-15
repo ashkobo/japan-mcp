@@ -46,3 +46,12 @@ test("fromWareki", () => {
   assert.throws(() => fromWareki("平成32年"), RangeError);
   assert.throws(() => fromWareki("昭和64年1月8日"), RangeError);
 });
+
+test("partial era dates reject impossible months and months outside the era", () => {
+  for (const value of ["令和8年0月", "令和8年13月", "平成31年5月", "令和元年4月"]) {
+    assert.throws(() => fromWareki(value), RangeError, value);
+  }
+  assert.deepEqual(fromWareki("平成31年4月"), { year: 2019, month: 4 });
+  assert.deepEqual(fromWareki("令和元年5月"), { year: 2019, month: 5 });
+  assert.deepEqual(fromWareki("昭和64年1月"), { year: 1989, month: 1 });
+});

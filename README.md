@@ -48,18 +48,34 @@ Requires Node.js 18 or later.
 | `japan_add_business_days` | N business days after / before a date | `2026-09-18` + 1 → `2026-09-24` |
 | `japan_wareki` | 和暦 ⇄ 西暦, both directions | `R8.10.13` → `2026-10-13` |
 
-Business-day tools take `yearEnd: true` to also close 12/29–1/3 (年末年始), as banks and offices do.
+Business-day tools take `yearEnd: true` to also close 12/29–1/3 (年末年始), a common office closure.
+This option is not a bank settlement calendar: banks do not all close for the same dates.
 
 ## As a library
 
+<!-- readme-trial: library -->
 ```js
-import { addBusinessDays, holidayName, toWareki, fromWareki } from 'japan-mcp';
+import assert from "node:assert/strict";
+import { addBusinessDays, holidayName, toWareki, fromWareki } from "japan-mcp";
 
-addBusinessDays('2026-04-30', 3); // '2026-05-08'
-holidayName('2026-09-22');        // '国民の休日'
-toWareki('2019-05-01').text;      // '令和元年5月1日'
-fromWareki('平成31年4月30日').date; // '2019-04-30'
+assert.equal(addBusinessDays("2026-04-30", 3), "2026-05-08");
+assert.equal(holidayName("2026-09-22"), "国民の休日");
+assert.equal(toWareki("2019-05-01").text, "令和元年5月1日");
+assert.equal(fromWareki("平成31年4月30日").date, "2019-04-30");
 ```
+
+## Try a deadline
+
+After registering the server, ask: "What date is 5 business days after April 30, 2026 in Japan?"
+The agent should call `japan_add_business_days` with `date: "2026-04-30", days: 5` and return
+`2026-05-12`. Saturdays, Sundays and Golden Week holidays are skipped.
+From a source checkout, `npm run demo` runs this scenario with assertions and prints the result.
+
+Choose this for offline deadline arithmetic plus era conversion without an API key.
+[mcp-jp-calendar](https://github.com/skypier-jp-works/mcp-jp-calendar) is another offline option
+with gotobi, fiscal periods and custom closures. Choose it when those rules are central.
+This server includes era conversion and covers 1949–2099; future equinox dates are predictions.
+A simple list of holidays may only need [holiday_jp](https://github.com/holiday-jp/holiday_jp).
 
 ## Notes
 
@@ -75,3 +91,15 @@ AI エージェントに日本のカレンダーを渡す MCP サーバーです
 ## License
 
 MIT
+
+## Verify and troubleshoot
+
+`npm run verify:package` packs the current source, installs it in a fresh directory and checks
+the library demo, MCP initialization, tool listing and a real tool call. `npm test` runs the
+full regression suite. [MAINTENANCE.md](MAINTENANCE.md) lists the release and annual review steps.
+
+If tools do not appear, check that `node --version` is at least 18, run the registration command
+in the same client environment, and restart that client. A stdio server waiting silently when
+started by hand is normal; it expects an MCP client, not typed prose.
+An out-of-range year is an error. For a company shutdown or a bank payment deadline, confirm
+the actual calendar rather than assuming that `yearEnd` covers that organization's rules.

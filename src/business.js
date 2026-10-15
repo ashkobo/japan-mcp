@@ -3,7 +3,7 @@
 // business.js
 // ---------------------------------------------------------------------------
 // Business days (営業日): not Saturday, Sunday or a national holiday.
-// Option `yearEnd`: also close 12/29–1/3 (年末年始), as banks and offices do.
+// Option `yearEnd`: also close 12/29–1/3, a common office closure (not a bank calendar).
 
 import { formatDay, parseDate, partsOf, weekdayOf } from "./dates.js";
 import { holidayNameOfDay } from "./holidays.js";
